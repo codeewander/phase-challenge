@@ -1,18 +1,44 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useContext } from 'react'
+import styled from 'styled-components'
+import { DataContext } from './contexts/DataContext'
 
-const ElementsWrapper = styled.div``;
+const ElementsWrapper = styled.div``
+
+const ElementText = styled.div`
+  color: ${(props) => (props.active ? '#0274ff' : '#fff')};
+  cursor: pointer;
+`
+
 const Elements = () => {
+  const { data, setData } = useContext(DataContext)
+  const elementsList = data.directory.find(
+    (page) => page.id === data.selectedPage
+  ).elements
+  const elementsData = data.elements.filter((element) =>
+    elementsList.includes(element.id)
+  )
+
+
+  const selectElement = (id) => {
+    setData({
+      ...data,
+      selectedElement: id,
+      targetElementData: data.elements.find((element) => element.id === id)
+    })
+  };
   return (
     <ElementsWrapper>
       <h4>Elements</h4>
-      <div>
-        <strong>Element 1</strong>
-      </div>
-      <div>Element 2</div>
-      <div>Element 3</div>
+      {elementsData.map((element) => (
+        <ElementText
+          active={data.selectedElement === element.id}
+          onClick={() => selectElement(element.id)}
+        >
+          {element.name}
+        </ElementText>
+      ))}
     </ElementsWrapper>
-  );
-};
+  )
+}
 
-export default Elements;
+export default Elements
