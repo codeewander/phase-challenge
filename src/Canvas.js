@@ -15,25 +15,30 @@ const Block = styled.div`
   left: ${(props) => props.x}px;
   top: ${(props) => props.y}px;
   opacity: ${(props) => props.o};
-  background: green;
+  background: ${(props) => props.b};
   outline: ${(props) => (props.active ? 3 : 0)}px solid #0274ff;
 `
 
 const Canvas = () => {
-  const {data, setData} = useContext(DataContext)
+  const { data, setData } = useContext(DataContext)
   const canvasElementIds = data.directory.find(
     (page) => page.id === data.selectedPage
   ).elements
-  console.log(canvasElementIds,'canvasElementIds')
   const elements = data.elements.filter((element) =>
     canvasElementIds.includes(element.id)
   )
-  console.log(elements,'elements')
 
   return (
     <CanvasWrapper>
       {elements.map((element) => (
-        <Block x={element.detail.x} y={element.detail.y} o={element.detail.o} key={element.id} active={element.id === data.selectedElement}/>
+        <Block
+          x={element.detail.x}
+          y={element.detail.y}
+          o={element.detail.o}
+          b={element.detail.b}
+          key={element.id}
+          active={element.id === data.selectedElement}
+        />
       ))}
     </CanvasWrapper>
   )

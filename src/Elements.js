@@ -23,7 +23,7 @@ const Elements = () => {
     setData({
       ...data,
       selectedElement: id,
-      targetElementData: data.elements.find((element) => element.id === id)
+      targetElementData: data.elements.find((element) => element.id === id).detail
     })
   };
   return (
