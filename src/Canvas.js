@@ -1,11 +1,12 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useContext } from 'react'
+import styled from 'styled-components'
+import { DataContext } from './contexts/DataContext'
 
 const CanvasWrapper = styled.div`
   position: relative;
   background: white;
   overflow: hidden;
-`;
+`
 
 const Block = styled.div`
   position: absolute;
@@ -15,17 +16,27 @@ const Block = styled.div`
   top: ${(props) => props.y}px;
   opacity: ${(props) => props.o};
   background: green;
-  outline: ${(props) => (props.active ? 1 : 0)}px solid #0274ff;
-`;
+  outline: ${(props) => (props.active ? 3 : 0)}px solid #0274ff;
+`
 
 const Canvas = () => {
+  const {data, setData} = useContext(DataContext)
+  const canvasElementIds = data.directory.find(
+    (page) => page.id === data.selectedPage
+  ).elements
+  console.log(canvasElementIds,'canvasElementIds')
+  const elements = data.elements.filter((element) =>
+    canvasElementIds.includes(element.id)
+  )
+  console.log(elements,'elements')
+
   return (
     <CanvasWrapper>
-      <Block x={10} y={10} o={1} active />
-      <Block x={60} y={60} o={0.5} />
-      <Block x={110} y={110} o={1} />
+      {elements.map((element) => (
+        <Block x={element.detail.x} y={element.detail.y} o={element.detail.o} key={element.id} active={element.id === data.selectedElement}/>
+      ))}
     </CanvasWrapper>
-  );
-};
+  )
+}
 
-export default Canvas;
+export default Canvas
