@@ -1,6 +1,7 @@
-import React, { useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import { DataContext } from './contexts/DataContext'
+import Draggable from 'react-draggable'
 
 const CanvasWrapper = styled.div`
   position: relative;
@@ -19,7 +20,25 @@ const Block = styled.div`
   border: ${(props) => (props.active ? 3 : 0)}px solid #0274ff;
 `
 
-const Canvas = ({ selectedElement, fixElements, targetElementData }) => {
+const Canvas = ({
+  selectedElement,
+  fixElements,
+  targetElementData,
+  resetPosition,
+}) => {
+  let startPointX, startPointY
+  const [position, setPosition] = useState({ x: 0, y: 0 })
+
+  const handleStartDrag = (e, data) => {
+    startPointX = data.lastX
+    startPointY = data.lastY
+  }
+
+  const handleStopDrag = (e, data) => {
+    const x = targetElementData.x + data.lastX - startPointX
+    const y = targetElementData.y + data.lastY - startPointY
+    resetPosition(x, y)
+  }
   return (
     <CanvasWrapper>
       {fixElements.map((element) => (
@@ -31,13 +50,19 @@ const Canvas = ({ selectedElement, fixElements, targetElementData }) => {
           key={element.id}
         />
       ))}
-      <Block
-        x={targetElementData.x}
-        y={targetElementData.y}
-        o={targetElementData.o}
-        b={targetElementData.b}
-        active
-      />
+      <Draggable
+        onStart={handleStartDrag}
+        onStop={handleStopDrag}
+        position={position}
+      >
+        <Block
+          x={targetElementData.x}
+          y={targetElementData.y}
+          o={targetElementData.o}
+          b={targetElementData.b}
+          active
+        />
+      </Draggable>
     </CanvasWrapper>
   )
 }

@@ -8,7 +8,6 @@ const LeftPanelWrapper = styled.div`
   padding: 8px;
 `
 const LeftPanel = () => {
-  console.log('render left panel')
   const { data, setData } = useContext(DataContext)
   const elementsList = data.directory.find(
     (page) => page.id === data.selectedPage
@@ -48,8 +47,10 @@ const LeftPanel = () => {
     setData({
       ...data,
       selectedElement: id,
-      targetElementData: {...data.elements.find((element) => element.id === id)
-        .detail, id:id},
+      targetElementData: {
+        ...data.elements.find((element) => element.id === id).detail,
+        id: id,
+      },
     })
   }, [])
 

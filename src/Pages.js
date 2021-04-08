@@ -11,7 +11,6 @@ const PageText = styled.div`
 `
 
 const Pages = ({ selectedPage, directory, selectPage, renameItem }) => {
-  console.log('render page')
   const [editTarget, setEditTarget] = useState(null)
   const [pageTitle, setPageTitle] = useState('')
 

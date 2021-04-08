@@ -12,12 +12,11 @@ const AppWrapper = styled.div`
   color: white;
 `
 const App = () => {
-  
   return (
-      <AppWrapper>
-        <LeftPanel />
-        <ControlView/>
-      </AppWrapper>
+    <AppWrapper>
+      <LeftPanel />
+      <ControlView />
+    </AppWrapper>
   )
 }
 

@@ -17,6 +17,17 @@ function ControlView() {
     (element) => element.id !== data.selectedElement
   )
 
+  const resetPosition = useCallback((x, y) => {
+    setData((prev) => ({
+      ...prev,
+      targetElementData: {
+        ...prev.targetElementData,
+        x: x,
+        y: y,
+      },
+    }))
+  }, [])
+
   const handleChangeInput = useCallback((e) => {
     e.persist()
     if (e.target.name === 'b') {
@@ -31,7 +42,7 @@ function ControlView() {
 
   useEffect(() => {
     setValues(data.targetElementData)
-  }, [data.selectedElement])
+  }, [data.selectedElement, data.targetElementData])
 
   useEffect(() => {
     const targetElementIndex = data.elements.findIndex(
@@ -52,6 +63,7 @@ function ControlView() {
         selectedElement={data.selectedElement}
         fixElements={fixElements}
         targetElementData={fields}
+        resetPosition={resetPosition}
       />
       <RightPanel
         targetElement={data.targetElement}

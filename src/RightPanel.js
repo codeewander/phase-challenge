@@ -11,8 +11,6 @@ const Label = styled.label`
   grid-gap: 8px;
 `
 const RightPanel = ({ targetElementData, handleChangeInput }) => {
-  console.log('render right panel')
-
   return (
     <RightPanelWrapper>
       <Label>
