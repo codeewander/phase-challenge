@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import LeftPanel from './LeftPanel'
 import Canvas from './Canvas'
 import RightPanel from './RightPanel'
+import { DataContextProvider } from './contexts/DataContext'
 
 const AppWrapper = styled.div`
   display: grid;
@@ -14,11 +15,13 @@ const AppWrapper = styled.div`
 `
 const App = () => {
   return (
-    <AppWrapper>
-      <LeftPanel />
-      <Canvas />
-      <RightPanel />
-    </AppWrapper>
+    <DataContextProvider>
+      <AppWrapper>
+        <LeftPanel />
+        <Canvas />
+        <RightPanel />
+      </AppWrapper>
+    </DataContextProvider>
   )
 }
 
