@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { memo, useRef, useEffect } from 'react'
 import styled from 'styled-components'
 
 const ColorPickerWrapper = styled.div`
@@ -30,4 +30,4 @@ const ColorPicker = ({ color }) => {
   )
 }
 
-export default ColorPicker
+export default memo(ColorPicker)

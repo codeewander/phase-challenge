@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import { DataContext } from './contexts/DataContext'
 
@@ -13,6 +13,8 @@ const PageText = styled.div`
 
 const Pages = () => {
   const { data, setData } = useContext(DataContext)
+  const [editTarget, setEditTarget] = useState(null);
+  const [pageTitle, setPageTitle] = useState("");
 
   const selectPage = (id) => {
     const isElementNotFound = data.directory
@@ -41,13 +43,45 @@ const Pages = () => {
       })
     }
   }
+
+  const setEditStatus = (id) => {
+    setEditTarget(id);
+    setPageTitle(data.directory.find((page) => page.id === id).name);
+  };
+
+  const removeEditStatus = (id) => {
+    setEditTarget(null);
+    const targetIndex = data.directory.findIndex(
+      (page) => page.id === id
+    );
+    const cloneDirectory = data.directory;
+    const targetDirectory = cloneDirectory[targetIndex];
+    targetDirectory.name = pageTitle;
+    setData({...data, directory: cloneDirectory})
+  };
+
+  const editText = (e) => {
+    setPageTitle(e.target.value);
+  };
+
   return (
     <PagesWrapper>
       <h4>Pages</h4>
       {data.directory.map((page) => (
+        editTarget === page.id ? (
+          <input
+            type="text"
+            value={pageTitle}
+            onChange={editText}
+            onBlur={() => removeEditStatus(page.id)}
+            key={page.id}
+            maxlength="20"
+          />
+        ):
         <PageText
           active={data.selectedPage === page.id}
           onClick={() => selectPage(page.id)}
+          onDoubleClick={(e) => setEditStatus(page.id)}
         >
           {page.name}
         </PageText>
