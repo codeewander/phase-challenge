@@ -1,6 +1,5 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, memo } from 'react'
 import styled from 'styled-components'
-import { DataContext } from './contexts/DataContext'
 
 const PagesWrapper = styled.div`
   border-bottom: 1px solid;
@@ -11,63 +10,29 @@ const PageText = styled.div`
   cursor: pointer;
 `
 
-const Pages = () => {
-  const { data, setData } = useContext(DataContext)
-  const [editTarget, setEditTarget] = useState(null);
-  const [pageTitle, setPageTitle] = useState("");
-
-  const selectPage = (id) => {
-    const isElementNotFound = data.directory
-      .find((page) => page.id === id)
-      .elements.some((element) => element !== data.selectedElement)
-    const defaultSelectElement = data.directory.find((page) => page.id === id)
-      .elements[0]
-
-    // if selectedElement can't find in selectedPage, then set the first element of this page as default select element
-    if (isElementNotFound) {
-      setData({
-        ...data,
-        selectedPage: id,
-        selectedElement: defaultSelectElement,
-        targetElementData: {
-          ...data.elements.find(
-            (element) => element.id === defaultSelectElement
-          ).detail,
-          id: defaultSelectElement,
-        },
-      })
-    } else {
-      setData({
-        ...data,
-        selectPage: id,
-      })
-    }
-  }
+const Pages = ({ selectedPage, directory, selectPage, renameItem }) => {
+  console.log('render page')
+  const [editTarget, setEditTarget] = useState(null)
+  const [pageTitle, setPageTitle] = useState('')
 
   const setEditStatus = (id) => {
-    setEditTarget(id);
-    setPageTitle(data.directory.find((page) => page.id === id).name);
-  };
+    setEditTarget(id)
+    setPageTitle(directory.find((page) => page.id === id).name)
+  }
 
   const removeEditStatus = (id) => {
-    setEditTarget(null);
-    const targetIndex = data.directory.findIndex(
-      (page) => page.id === id
-    );
-    const cloneDirectory = data.directory;
-    const targetDirectory = cloneDirectory[targetIndex];
-    targetDirectory.name = pageTitle;
-    setData({...data, directory: cloneDirectory})
-  };
+    setEditTarget(null)
+    renameItem(directory, id, pageTitle)
+  }
 
   const editText = (e) => {
-    setPageTitle(e.target.value);
-  };
+    setPageTitle(e.target.value)
+  }
 
   return (
     <PagesWrapper>
       <h4>Pages</h4>
-      {data.directory.map((page) => (
+      {directory.map((page) =>
         editTarget === page.id ? (
           <input
             type="text"
@@ -77,17 +42,19 @@ const Pages = () => {
             key={page.id}
             maxlength="20"
           />
-        ):
-        <PageText
-          active={data.selectedPage === page.id}
-          onClick={() => selectPage(page.id)}
-          onDoubleClick={(e) => setEditStatus(page.id)}
-        >
-          {page.name}
-        </PageText>
-      ))}
+        ) : (
+          <PageText
+            active={selectedPage === page.id}
+            onClick={() => selectPage(page.id)}
+            onDoubleClick={(e) => setEditStatus(page.id)}
+            key={page.id}
+          >
+            {page.name}
+          </PageText>
+        )
+      )}
     </PagesWrapper>
   )
 }
 
-export default Pages
+export default memo(Pages)

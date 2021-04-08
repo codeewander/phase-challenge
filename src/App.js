@@ -1,9 +1,7 @@
-import React from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import LeftPanel from './LeftPanel'
-import Canvas from './Canvas'
-import RightPanel from './RightPanel'
-import { DataContextProvider } from './contexts/DataContext'
+import ControlView from './ControlView'
 
 const AppWrapper = styled.div`
   display: grid;
@@ -14,14 +12,12 @@ const AppWrapper = styled.div`
   color: white;
 `
 const App = () => {
+  
   return (
-    <DataContextProvider>
       <AppWrapper>
         <LeftPanel />
-        <Canvas />
-        <RightPanel />
+        <ControlView/>
       </AppWrapper>
-    </DataContextProvider>
   )
 }
 

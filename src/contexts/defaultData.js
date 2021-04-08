@@ -12,7 +12,7 @@ export const initialState = {
     {
       id: '1-2',
       name: 'Element 2',
-      detail: { x: 60, y: 60, o: 0.2, b: '#c0ca00' },
+      detail: {  x: 60, y: 60, o: 0.2, b: '#c0ca00' },
     },
     {
       id: '1-3',

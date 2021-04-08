@@ -1,57 +1,32 @@
-import React, { useState, useContext } from 'react'
+import React, { memo, useState, useContext } from 'react'
 import styled from 'styled-components'
-import { DataContext } from './contexts/DataContext'
-
-const ElementsWrapper = styled.div``
 
 const ElementText = styled.div`
   color: ${(props) => (props.active ? '#0274ff' : '#fff')};
   cursor: pointer;
 `
 
-const Elements = () => {
-  const { data, setData } = useContext(DataContext)
-  const [editTarget, setEditTarget] = useState(null);
-  const [elementTitle, setElementTitle] = useState(" ");
-  const elementsList = data.directory.find(
-    (page) => page.id === data.selectedPage
-  ).elements
-  const elementsData = data.elements.filter((element) =>
-    elementsList.includes(element.id)
-  )
-
-
-  const selectElement = (id) => {
-    setData({
-      ...data,
-      selectedElement: id,
-      targetElementData: data.elements.find((element) => element.id === id).detail
-    })
-  };
+const Elements = ({ selectElement, selectedElement, renameItem, elements }) => {
+  const [editTarget, setEditTarget] = useState(null)
+  const [elementTitle, setElementTitle] = useState(' ')
 
   const setEditStatus = (id) => {
-    setEditTarget(id);
-    setElementTitle(data.elements.find((element) => element.id === id).name);
-  };
+    setEditTarget(id)
+    setElementTitle(elements.find((element) => element.id === id).name)
+  }
 
   const editText = (e) => {
-    setElementTitle(e.target.value);
-  };
+    setElementTitle(e.target.value)
+  }
 
   const removeEditStatus = (id) => {
-    setEditTarget(null);
-    const targetElementIndex = data.elements.findIndex(
-      (element) => element.id === id
-    );
-    const cloneElements = data.elements;
-    const targetElement = cloneElements[targetElementIndex];
-    targetElement.name = elementTitle;
-    setData({...data, elements: cloneElements})
-  };
+    setEditTarget(null)
+    renameItem(elements, id, elementTitle)
+  }
   return (
-    <ElementsWrapper>
+    <div>
       <h4>Elements</h4>
-      {elementsData.map((element) => (
+      {elements.map((element) =>
         editTarget === element.id ? (
           <input
             type="text"
@@ -61,17 +36,19 @@ const Elements = () => {
             key={element.id}
             maxlength="20"
           />
-        ) :
-        (<ElementText
-          active={data.selectedElement === element.id}
-          onClick={() => selectElement(element.id)}
-          onDoubleClick={(e) => setEditStatus(element.id)}
-        >
-          {element.name}
-        </ElementText>)
-      ))}
-    </ElementsWrapper>
+        ) : (
+          <ElementText
+            active={selectedElement === element.id}
+            onClick={() => selectElement(element.id)}
+            onDoubleClick={(e) => setEditStatus(element.id)}
+            key={element.id}
+          >
+            {element.name}
+          </ElementText>
+        )
+      )}
+    </div>
   )
 }
 
-export default Elements
+export default memo(Elements)

@@ -16,30 +16,28 @@ const Block = styled.div`
   top: ${(props) => props.y}px;
   opacity: ${(props) => props.o};
   background: ${(props) => props.b};
-  outline: ${(props) => (props.active ? 3 : 0)}px solid #0274ff;
+  border: ${(props) => (props.active ? 3 : 0)}px solid #0274ff;
 `
 
-const Canvas = () => {
-  const { data, setData } = useContext(DataContext)
-  const canvasElementIds = data.directory.find(
-    (page) => page.id === data.selectedPage
-  ).elements
-  const elements = data.elements.filter((element) =>
-    canvasElementIds.includes(element.id)
-  )
-
+const Canvas = ({ selectedElement, fixElements, targetElementData }) => {
   return (
     <CanvasWrapper>
-      {elements.map((element) => (
+      {fixElements.map((element) => (
         <Block
           x={element.detail.x}
           y={element.detail.y}
           o={element.detail.o}
           b={element.detail.b}
           key={element.id}
-          active={element.id === data.selectedElement}
         />
       ))}
+      <Block
+        x={targetElementData.x}
+        y={targetElementData.y}
+        o={targetElementData.o}
+        b={targetElementData.b}
+        active
+      />
     </CanvasWrapper>
   )
 }
