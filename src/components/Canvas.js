@@ -1,6 +1,5 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import { DataContext } from './contexts/DataContext'
 import Draggable from 'react-draggable'
 
 const CanvasWrapper = styled.div`
@@ -21,7 +20,6 @@ const Block = styled.div`
 `
 
 const Canvas = ({
-  selectedElement,
   fixElements,
   targetElementData,
   resetPosition,

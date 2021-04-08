@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react'
-import Canvas from './Canvas'
-import RightPanel from './RightPanel'
+import Canvas from './components/Canvas'
+import RightPanel from './components/RightPanel'
 import { DataContext } from './contexts/DataContext'
 
 function ControlView() {
@@ -60,7 +60,6 @@ function ControlView() {
   return (
     <>
       <Canvas
-        selectedElement={data.selectedElement}
         fixElements={fixElements}
         targetElementData={fields}
         resetPosition={resetPosition}

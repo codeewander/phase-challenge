@@ -1,7 +1,7 @@
 import React, { useContext, useCallback } from 'react'
 import styled from 'styled-components'
-import Pages from './Pages'
-import Elements from './Elements'
+import Pages from './components/Pages'
+import Elements from './components/Elements'
 import { DataContext } from './contexts/DataContext'
 
 const LeftPanelWrapper = styled.div`

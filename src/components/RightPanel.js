@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components'
 import ColorPicker from './ColorPicker'
 
@@ -68,4 +68,4 @@ const RightPanel = ({ targetElementData, handleChangeInput }) => {
   )
 }
 
-export default RightPanel
+export default memo(RightPanel)
