@@ -34,7 +34,7 @@ const Elements = ({ selectElement, selectedElement, renameItem, elements }) => {
             onChange={editText}
             onBlur={() => removeEditStatus(element.id)}
             key={element.id}
-            maxlength="20"
+            maxLength="20"
           />
         ) : (
           <ElementText
@@ -42,6 +42,7 @@ const Elements = ({ selectElement, selectedElement, renameItem, elements }) => {
             onClick={() => selectElement(element.id)}
             onDoubleClick={(e) => setEditStatus(element.id)}
             key={element.id}
+            data-testid="elementItem"
           >
             {element.name}
           </ElementText>

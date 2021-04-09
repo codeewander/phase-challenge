@@ -24,12 +24,13 @@ const ColorPicker = ({ color, handleChange }) => {
     ref.current.style.background = inputRef.current.value
   }, [color])
   return (
-    <ColorPickerWrapper ref={ref}>
+    <ColorPickerWrapper ref={ref} data-testid="colorBox">
       <ColorInput
         name="b"
         value={color}
         ref={inputRef}
         onChange={handleChange}
+        data-testid="colorInput"
       />
     </ColorPickerWrapper>
   )

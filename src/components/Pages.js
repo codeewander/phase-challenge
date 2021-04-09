@@ -39,7 +39,7 @@ const Pages = ({ selectedPage, directory, selectPage, renameItem }) => {
             onChange={editText}
             onBlur={() => removeEditStatus(page.id)}
             key={page.id}
-            maxlength="20"
+            maxLength="20"
           />
         ) : (
           <PageText
@@ -47,6 +47,7 @@ const Pages = ({ selectedPage, directory, selectPage, renameItem }) => {
             onClick={() => selectPage(page.id)}
             onDoubleClick={(e) => setEditStatus(page.id)}
             key={page.id}
+            data-testid="pageItem"
           >
             {page.name}
           </PageText>
